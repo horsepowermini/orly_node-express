@@ -4,12 +4,7 @@ var express = require('express');
 
 var app = express()
 
-var communistQuotes = [
-  "Пролетарии всех стран, соединяйтесь!",
-  "К цели приводит не знание, а действие",
-  "Каждый по возможностям, каждому по труду",
-  "Труд на благо общества - дело благородное"
-]
+var communistQuotes = require('./lib/communistQuotes.js')
 
 // Установка механизма представления handlebars
 var handlebars = require('express-handlebars').create({defaultLayout: 'main'})
@@ -25,8 +20,7 @@ app.get('/', function(req, res) {
 })
 
 app.get('/about', function(req, res) {
-  var randomCommunistQuote = communistQuotes[Math.floor(Math.random() * communistQuotes.length)]
-  res.render('about', { communistQuote: randomCommunistQuote })
+  res.render('about', { communistQuote: communistQuotes.getQuote() })
 })
 
 // Обобщенный обработчик 404 (промежуточное ПО)
